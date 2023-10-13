@@ -1,29 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import { useStore } from '../../architect/state-management/stores'
-import { autorun } from 'mobx'
+import { autorun, toJS } from 'mobx'
+import { observer } from 'mobx-react'
+import NewsCard from './NewsCard'
+import { Row } from 'reactstrap'
+
+const NewsMainHeader = {fontSize: 44,  fontWeight: 'bolder', textAlign: 'left' as const, width: '100%', boxSizing: 'border-box' as const, paddingLeft: 30, borderBottom: '2px lightgray solid'}
 
 const NewsPage = () => {
 
     
 
-    const [news, setNews] = useState<Array<any>>([])
+    
     const { newsStore } = useStore()
+    const [allClosed, setAllClosed] = useState(false)
 
-    autorun(() => newsStore.getNews())
+    // useEffect(() => newsStore.getNews())
+    const news = toJS(newsStore.showNews()) ?? []
+
+    console.log(news)
+
+   
+    const close = () => {
+      setAllClosed(true)
+    }
 
     useEffect(() => {
-           
-            let res = newsStore.showNews()
-            if ((res as any)?.articles) setNews((res as any).articles.map((i: any) => i.title))
+      if (allClosed) setTimeout(() => setAllClosed(false), 100)
     })
+    
 
   return (
     <div>
+      <Row style={NewsMainHeader} onClick={close}>
+      News
+    </Row>
+    <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 16, padding: 16}}>
         {news.map((i: any) => {
-            return <div>{i}</div>
+            return <NewsCard i={i} allClosed={allClosed} />
         })}
     </div>
+    </div>
+    
   )
 }
 
-export default NewsPage
+export default  observer(NewsPage)
+
+

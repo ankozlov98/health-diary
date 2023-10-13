@@ -1,6 +1,6 @@
 
 
-export type measureSystem = 'metric' | 'imperial'
+export type measureSystem = 'metric' | 'imperial' | 'kg'
 
 export interface WeightInterface {
     weight: number,
@@ -14,16 +14,23 @@ export interface ShortDiaryRecord {
     title: string
 }
 
+export interface measureInterface {
+    "Weight": WeightInterface;
+    "Blood Pressure": string;
+    "Heart Rate": number;
+    "Sleep Duration": number;
+    "Steps": number;
+    "Calories Burned": number;
+} 
 
-export interface HealthDiaryRecord extends ShortDiaryRecord {
-    weight: WeightInterface;
-    bloodPressure: string;
-    heartRate: number;
-    sleepDuration: number;
-    steps: number;
-    caloriesBurned: number;
+export interface habitInformation {
     waterIntake: number;
     medicationTaken: boolean;
+}
+
+export interface HealthDiaryRecord extends ShortDiaryRecord {
+    measureInformation: measureInterface
+    habitInformation: habitInformation
     mood: number;
     
   }

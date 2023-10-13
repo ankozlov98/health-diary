@@ -1,18 +1,21 @@
-import { observable, action, runInAction, configure, makeObservable } from 'mobx'
+import { observable, action, runInAction, configure, makeObservable, makeAutoObservable } from 'mobx'
 import NewsService from '../services/NewsService'
+import { ArticleInterface } from '../../types/newsTypes'
 
 configure({ enforceActions: 'observed' })
 
+interface newsListInterface {
+articles?: Array<ArticleInterface>
+}
+
 class NewsStore {
-    newsList = {}
+    newsList: newsListInterface = {}
     newsService = new NewsService()
 
     constructor() {
-        makeObservable(this, {
-            newsList: observable,
-            setNewsList: action,
-        })
+        makeAutoObservable(this)
         this.newsService = new NewsService()
+        runInAction(this.getNews)
     }
 
     setNewsList = (apiData: any) => {
@@ -20,18 +23,19 @@ class NewsStore {
     }
 
     showNews = () => {
-        return this.newsList
+        return this.newsList.articles ?? []
     }
 
 
 
     //correct way of updating data
-    getNews = () => {
-        this.newsService.getNewsTopHeadLines().then((data: any) => {
-            runInAction(() => {
-                this.setNewsList(data)
+    getNews = async () => {
+       let res = await this.newsService.getNewsTopHeadLines()
+            
+       runInAction(() => {
+                this.setNewsList(res)
             })
-        })
+        
     }
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'reactstrap'
 import DiaryController from './components/DiaryController'
 import DiaryEditor from './DiaryEditor'
@@ -18,9 +18,14 @@ const HealthDiary = () => {
 
     const [mode, setMode] = useState<DiaryPageMode>('intro')
    
+    
+    const loc = useLocation()
 
+useEffect(() => {
+    const probId = loc.pathname.split('/diary/')[1]
 
-   
+    if (probId) setMode('single')
+ }, [])
      
    
   return (
@@ -34,7 +39,7 @@ const HealthDiary = () => {
             <DiaryController />
             <DiaryRecordsList />
         </Col>
-        <Col style={{...DiaryPageCommonContainerStyle, boxSizing: 'border-box', borderTop: '2px solid lightgray', borderLeft: '2px solid lightgray', justifyContent: 'flex-start'}}>
+        <Col style={{...DiaryPageCommonContainerStyle, boxSizing: 'border-box', borderTop: '2px solid lightgray', borderLeft: '2px solid lightgray', justifyContent: 'flex-start', alignItems: 'flex-start'}}>
             {mode === 'edit' && <DiaryEditor />}
             {mode === 'single' && <DiaryRecordFull />}
         </Col> 
