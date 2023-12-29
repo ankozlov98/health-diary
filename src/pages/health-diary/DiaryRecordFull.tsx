@@ -4,6 +4,7 @@ import { HealthDiaryRecord, WeightInterface, measureInterface } from '../../arch
 import { useStore } from '../../architect/state-management/stores';
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import DiaryLineGraph from './components/DiaryLineGraph';
 
 
 type PHRD = Partial<HealthDiaryRecord> | null
@@ -54,8 +55,11 @@ const DiaryRecordFull = () => {
            
           })}
       </div>
+     
       </div>}
-      
+      {
+        (item?.mark || item?.mark === 0) && <DiaryLineGraph mark={item.mark} />
+      }
       
     </div>
   )

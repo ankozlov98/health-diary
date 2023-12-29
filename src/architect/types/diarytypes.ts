@@ -32,7 +32,7 @@ export interface HealthDiaryRecord extends ShortDiaryRecord {
     measureInformation: measureInterface
     habitInformation: habitInformation
     mood: number;
-    
+    mark: 0 | 1 | 2 | 3 | 4 | 5
   }
 
 

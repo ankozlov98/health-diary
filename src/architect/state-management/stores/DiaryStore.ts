@@ -23,7 +23,8 @@ const list: Array<Partial<HealthDiaryRecord> | null> = [
       id: '111',
       date: getCurrentUTCDate().toDateString(),
       title: shortenString("Lorem ipsum dolor sit amet", 60) as string,
-      content: shortenString("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sem tortor, efficitur non tortor et, rhoncus rhoncus lacus. Fusce ac sodales sem, ac venenatis lacus. Integer fermentum feugiat pretium. Donec dapibus enim ac est tincidunt dignissim. Cras at lacinia tortor. Nulla pulvinar urna vel.", 250) as string
+      content: shortenString("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sem tortor, efficitur non tortor et, rhoncus rhoncus lacus. Fusce ac sodales sem, ac venenatis lacus. Integer fermentum feugiat pretium. Donec dapibus enim ac est tincidunt dignissim. Cras at lacinia tortor. Nulla pulvinar urna vel.", 250) as string,
+      mark: 3
     },
     {
       id: '222',
